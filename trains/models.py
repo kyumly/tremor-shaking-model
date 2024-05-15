@@ -78,7 +78,6 @@ def trainer(model, num_epoch, dataloader_dict, optim, criterion, early_stop, dev
             best_valid_loss = valid_loss
             torch.save(model.state_dict(), f'save.pt')
         if early_stop > 0 and lowest_epoch + early_stop < epoch + 1:
-            print("왜 실행")
             print("There is no improvement during last %d epochs." % early_stop)
             break
         train_history.append(train_loss)
