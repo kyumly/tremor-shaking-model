@@ -9,17 +9,15 @@ from torch import nn as nn
 class CustomModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(in_features=7, out_features=256, dtype=torch.float64)
-        self.fc2 = nn.Linear(in_features=256, out_features=256, dtype=torch.float64)
-        self.fc3 = nn.Linear(in_features=256, out_features=64, dtype=torch.float64)
-        self.fc4 = nn.Linear(in_features=64, out_features=32, dtype=torch.float64)
+        self.fc1 = nn.Linear(in_features=7, out_features=32, dtype=torch.float64)
+        self.fc2 = nn.Linear(in_features=32, out_features=32, dtype=torch.float64)
+        self.fc3 = nn.Linear(in_features=32, out_features=32, dtype=torch.float64)
         self.fc5 = nn.Linear(in_features=32, out_features=1, dtype=torch.float64)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
         x = torch.relu(self.fc3(x))
-        x = torch.relu(self.fc4(x))
         x = self.fc5(x)
         return x
 
