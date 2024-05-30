@@ -22,12 +22,13 @@ class CustomDataset(Dataset):
 
 def get_data(data):
     label = data['Result']
-    data = data.drop(['mY', 'mZ', "Result"], axis=1)
+    data = data.drop(['mX','mY', 'mZ', "Result"], axis=1).to_numpy().astype(np.float64)
 
-    st = StandardScaler()
-    st_data = st.fit(data).transform(data)
+    print(data.dtype)
+    # st = StandardScaler()
+    # st_data = st.fit(data).transform(data)
 
-    X_tarin, X_valid, y_train, y_valid= train_test_split(st_data, label,test_size=0.2, random_state=42)
+    X_tarin, X_valid, y_train, y_valid= train_test_split(data, label,test_size=0.2, random_state=42)
     y_train = np.array(y_train)
     y_valid = np.array(y_valid)
 

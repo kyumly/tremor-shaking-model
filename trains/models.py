@@ -9,7 +9,7 @@ from torch import nn as nn
 class CustomModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(in_features=7, out_features=32, dtype=torch.float64)
+        self.fc1 = nn.Linear(in_features=6, out_features=32, dtype=torch.float64)
         self.fc2 = nn.Linear(in_features=32, out_features=32, dtype=torch.float64)
         self.fc3 = nn.Linear(in_features=32, out_features=32, dtype=torch.float64)
         self.fc5 = nn.Linear(in_features=32, out_features=1, dtype=torch.float64)

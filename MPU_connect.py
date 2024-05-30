@@ -10,11 +10,15 @@ py_serial = serial.Serial(
     port='COM3',
 
     # 보드 레이트 (통신 속도)
-    baudrate=9600,
+    baudrate=115200,
 )
 
 model = CustomModel()
 model.load_state_dict(torch.load('./trains/save.pt'))
+
+
+
+data_list = []
 
 while True:
     print("실행중")
@@ -38,15 +42,15 @@ while True:
             print(values)
             Axyz = [float(value) for value in values[0:3]]
             Gxyz = [float(value) for value in values[3:6]]
-            Mxyz = [float(value) for value in values[6:7]]
+            # Mxyz = [float(value) for value in values[6:7]]
 
             combined_list = []
             combined_list.extend(Axyz)
             combined_list.extend(Gxyz)
-            combined_list.extend(Mxyz)
+            # combined_list.extend(Mxyz)
 
-            data = torch.tensor(combined_list, dtype=torch.float64)
-            print(data)
+            data = (torch.tensor(combined_list, dtype=torch.float64) )
+            print("실행 결과 : ", data)
 
             output_data = model(data)
             result = F.sigmoid(output_data)
