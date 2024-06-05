@@ -55,11 +55,17 @@ float altitude;
 void setup()
 {
     Wire.begin();
-    Serial.begin(9600);                        // 통신속도 38400 bps
+    Serial.begin(38400);                        // 통신속도 38400 bps
+
+    Serial.println("Initializing I2C devices...");
     accelgyro.initialize();
 
+    // verify connection
+    Serial.println("Testing device connections...");
+    Serial.println(accelgyro.testConnection() ? "MPU9250 connection successful" : "MPU9250 connection failed");
+
     delay(1000);
-    Serial.println("end");
+    Serial.println("     ");
     //  Mxyz_init_calibrated ();
 }
 
@@ -72,24 +78,39 @@ void loop()
     getHeading();               //before we use this function we should run 'getCompassDate_calibrated()' frist, so that we can get calibrated data ,then we can get correct angle .
     getTiltHeading();
 
-   
+    Serial.println("calibration parameter: ");
+    Serial.print(mx_centre);
+    Serial.print("         ");
+    Serial.print(my_centre);
+    Serial.print("         ");
+    Serial.println(mz_centre);
+    Serial.println("     ");
+
+    Serial.println("Acceleration(g) of X,Y,Z:");
     Serial.print(Axyz[0]);
-    Serial.print(", ");
+    Serial.print(",");
     Serial.print(Axyz[1]);
-    Serial.print(", ");
-    Serial.print(Axyz[2]);
-    Serial.print(", ");
+    Serial.print(",");
+    Serial.println(Axyz[2]);
+    Serial.println("Gyro(degress/s) of X,Y,Z:");
     Serial.print(Gxyz[0]);
-    Serial.print(", ");
+    Serial.print(",");
     Serial.print(Gxyz[1]);
-    Serial.print(", ");
-    Serial.print(Gxyz[2]);
-    Serial.print(", ");
+    Serial.print(",");
+    Serial.println(Gxyz[2]);
+    Serial.println("Compass Value of X,Y,Z:");
     Serial.print(Mxyz[0]);
-    Serial.print(", ");
+    Serial.print(",");
     Serial.print(Mxyz[1]);
-    Serial.print(", ");
+    Serial.print(",");
     Serial.println(Mxyz[2]);
+    Serial.println("The clockwise angle between the magnetic north and X-Axis:");
+    Serial.print(heading);
+    Serial.println(" ");
+    Serial.println("The clockwise angle between the magnetic north and the projection of the positive X-Axis in the horizontal plane:");
+    Serial.println(tiltheading);
+    Serial.println("   ");
+    Serial.println();
     delay(1000);
 }
 
@@ -113,8 +134,27 @@ void getTiltHeading(void)
 void Mxyz_init_calibrated ()
 {
 
+    Serial.println(F("Before using 9DOF,we need to calibrate the compass frist,It will takes about 2 minutes."));
+    Serial.print("  ");
+    Serial.println(F("During  calibratting ,you should rotate and turn the 9DOF all the time within 2 minutes."));
+    Serial.print("  ");
+    Serial.println(F("If you are ready ,please sent a command data 'ready' to start sample and calibrate."));
     while (!Serial.find("ready"));
+    Serial.println("  ");
+    Serial.println("ready");
+    Serial.println("Sample starting......");
+    Serial.println("waiting ......");
+
     get_calibration_Data ();
+
+    Serial.println("     ");
+    Serial.println("compass calibration parameter ");
+    Serial.print(mx_centre);
+    Serial.print("     ");
+    Serial.print(my_centre);
+    Serial.print("     ");
+    Serial.println(mz_centre);
+    Serial.println("    ");
 }
 void get_calibration_Data ()
 {
@@ -185,3 +225,4 @@ void getCompassDate_calibrated ()
     Mxyz[1] = Mxyz[1] - my_centre;
     Mxyz[2] = Mxyz[2] - mz_centre;
 }
+

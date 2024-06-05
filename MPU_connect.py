@@ -21,7 +21,6 @@ model.load_state_dict(torch.load('./trains/save.pt'))
 data_list = []
 
 while True:
-    print("실행중")
     # commend = input('아두이노에게 내릴 명령:')
     #
     # py_serial.write(commend.encode())
@@ -31,6 +30,7 @@ while True:
         # 들어온 값이 있으면 값을 한 줄 읽음 (BYTE 단위로 받은 상태)
         # BYTE 단위로 받은 response 모습 : b'\xec\x97\x86\xec\x9d\x8c\r\n'
         response = py_serial.readline()
+        print(response)
         # 디코딩 후, 출력 (가장 끝의 \n을 없애주기위해 슬라이싱 사용)
         data = response[:len(response) - 1].decode()
         data = data.replace("end\r", "")
@@ -54,8 +54,19 @@ while True:
 
             output_data = model(data)
             result = F.sigmoid(output_data)
-            print(result >= torch.FloatTensor([0.5]))
+            mask = (result >= torch.FloatTensor([0.5]))
+            if mask:
+                print("실행ㅉ")
+                c = "1"
+                c = c.encode('utf-8')
+                print(py_serial.write(c))
+            else:
+                print("거짓")
+                c = "0"
+                c = c.encode('utf-8')
+                print(py_serial.write(c))
         except Exception as e:
+
             print(e)
 
 
