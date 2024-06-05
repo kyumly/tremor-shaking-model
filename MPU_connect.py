@@ -120,17 +120,17 @@ while True:
             result = F.sigmoid(output_data)
             mask = (result >= torch.FloatTensor([0.5]))
             print(mask)
-            # print(mask)
-            # if mask:
-            #     print("실행ㅉ")
-            #     c = "1"
-            #     c = c.encode('utf-8')
-            #     print(py_serial.write(c))
-            # else:
-            #     print("거짓")
-            #     c = "0"
-            #     c = c.encode('utf-8')
-            #     print(py_serial.write(c))
+            print(mask)
+            if mask:
+                print("실행ㅉ")
+                c = "1"
+                c = c.encode('utf-8')
+                print(py_serial.write(c))
+            else:
+                print("거짓")
+                c = "0"
+                c = c.encode('utf-8')
+                print(py_serial.write(c))
 
         data_list = modify_queue(data_list, combined_list)
 
