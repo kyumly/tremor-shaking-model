@@ -17,7 +17,7 @@ py_serial = serial.Serial(
 )
 
 model = CustomModel()
-model.load_state_dict(torch.load('./trains/save.pt'))
+model.load_state_dict(torch.load('trains/save.pt'))
 
 
 input_size = 6
@@ -27,7 +27,7 @@ num_classes = 1
 
 
 lstm = LSTM(num_classes, input_size, hidden_size, num_layers)
-lstm.load_state_dict(torch.load('./trains/save_lstm.pt'))
+lstm.load_state_dict(torch.load('trains/save_lstm.pt'))
 
 linear = False
 

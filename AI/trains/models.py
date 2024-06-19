@@ -3,7 +3,7 @@ import torch
 from tqdm import tqdm
 from torch.nn import functional as F
 
-from ulits import epoch_time
+from AI.ulits import epoch_time
 from torch import nn as nn
 
 class CustomModel(nn.Module):
